@@ -1,10 +1,24 @@
 <script setup>
 import { ref } from "vue";
 
-const name = ref("John Doe");
 const race = ref("cat");
 const tasks = ref(["talk", "eat the homework"]);
+const newTask = ref("");
+const name = "John Doe";
 const link = "https://matiasm.com";
+
+const addTask = () => {
+  if (!newTask.value.trim()) {
+    return;
+  }
+
+  tasks.value.push(newTask.value);
+  newTask.value = "";
+};
+
+const deleteTask = (index) => {
+  tasks.value = tasks.value.filter((_, i) => i !== index);
+};
 
 const toggleRace = () => {
   race.value = race.value === "cat" ? "dog" : "cat";
@@ -16,8 +30,22 @@ const toggleRace = () => {
   <p v-if="race === 'cat'">User is a cat! :3</p>
   <p v-else-if="race === 'dog'">User is a dog</p>
   <p v-else>Unknown race</p>
+
+  <form @submit.prevent="addTask">
+    <label for="newTask">New Task</label>
+    <br />
+    <input type="text" id="newTask" name="newTask" v-model="newTask" />
+    <br />
+    <button type="submit">Add Task</button>
+  </form>
   <ul>
-    <li v-for="task in tasks" :key="task">{{ task }}</li>
+    <li v-for="(task, index) in tasks" :key="task">
+      <span>
+        {{ task }}
+        {{ " " }}
+        <button @click="deleteTask(index)">X</button>
+      </span>
+    </li>
   </ul>
   <a :href="link" target="_blank" rel="noopener">Link to my portfolio!</a>
   <br />
