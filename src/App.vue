@@ -1,19 +1,14 @@
-<script>
-export default {
-  data() {
-    return {
-      name: 'John Doe',
-      race: "cat",
-      tasks: ['poop', 'talk', 'eat the homework'],
-      link: 'https://matiasm.com'
-    }
-  },
-  methods: {
-    toggleRace() {
-      this.race = this.race === 'cat' ? 'dog' : 'cat'
-    }
-  }
-}
+<script setup>
+import { ref } from "vue";
+
+const name = ref("John Doe");
+const race = ref("cat");
+const tasks = ref(["talk", "eat the homework"]);
+const link = "https://matiasm.com";
+
+const toggleRace = () => {
+  race.value = race.value === "cat" ? "dog" : "cat";
+};
 </script>
 
 <template>
@@ -32,5 +27,4 @@ export default {
   <h1 class="text-2xl">Vue Jobs</h1>
 </template> -->
 
-<style scoped>
-</style>
+<style scoped></style>
