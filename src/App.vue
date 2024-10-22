@@ -1,8 +1,8 @@
 <script setup>
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 
 const race = ref("cat");
-const tasks = ref(["talk", "eat the homework"]);
+const tasks = ref([]);
 const newTask = ref("");
 const name = "John Doe";
 const link = "https://matiasm.com";
@@ -23,6 +23,17 @@ const deleteTask = (index) => {
 const toggleRace = () => {
   race.value = race.value === "cat" ? "dog" : "cat";
 };
+
+onMounted(async () => {
+  try {
+    const res = await fetch("https://jsonplaceholder.typicode.com/todos").then(
+      (res) => res.json()
+    );
+    tasks.value = await res.map((todo) => todo.title);
+  } catch (err) {
+    console.error("Error fetching tasks", err);
+  }
+});
 </script>
 
 <template>
